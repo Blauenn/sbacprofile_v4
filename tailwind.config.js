@@ -7,17 +7,18 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#6366f1',
-        accent: '#c7d2fe',
+        primary: "#6366f1",
+        accent: "#c7d2fe",
+        standard_black: "#262626",
 
-        majorAC: '#93c5fd',
-        majorBC: '#f97316',
-        majorCG: '#f97316',
-        majorFL: '#dc2626',
-        majorHT: '#1e40af',
-        majorIT: '#7c3aed',
-        majorMK: '#93c5fd',
-        majorTS: '#1e40af'
+        majorAC: "#93c5fd",
+        majorBC: "#f97316",
+        majorCG: "#f97316",
+        majorFL: "#dc2626",
+        majorHT: "#1e40af",
+        majorIT: "#7c3aed",
+        majorMK: "#93c5fd",
+        majorTS: "#1e40af"
       },
     },
   },
