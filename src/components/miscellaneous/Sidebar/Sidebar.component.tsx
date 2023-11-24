@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Tooltip } from "@mui/material";
+import { Skeleton, Tooltip } from "@mui/material";
+import { hover_transition } from "../../../constants/styles/transition.style";
 // Functions //
 import { fetch_user_image } from "../../../functions/fetch/fetch_user.function";
 // Contexts //
@@ -12,7 +13,6 @@ import Sidebar_modal_logout from "./modal/Sidebar_modal_logout.component";
 // Constants //
 import { background_color_from_major } from "../../../constants/styles/colors/color_from_major.constant";
 import { default_image } from "../../../constants/styles/miscellaneous/default_image.constant";
-import { hover_transition } from "../../../constants/styles/transition.style";
 import { CDN_ENDPOINT } from "../../../constants/ENDPOINTS";
 
 // Tailwind classes //
@@ -66,7 +66,7 @@ const Sidebar = () => {
               margin=""
             />
 
-            {userInfo ? (
+            {userInfo.primary_profile_ID !== 0 ? (
               /* User dashboard */
               <li className={`${sidebar_li} mx-1 mt-auto`}>
                 <Tooltip
@@ -77,9 +77,8 @@ const Sidebar = () => {
                 >
                   <NavLink to="/dashboard">
                     <div
-                      className={`${
-                        background_color_from_major[userInfo.profile_major]
-                      } overflow-hidden rounded-full`}
+                      className={`${background_color_from_major[userInfo.profile_major]
+                        } overflow-hidden rounded-full`}
                     >
                       <img
                         src={`${CDN_ENDPOINT}${profileImage}`}

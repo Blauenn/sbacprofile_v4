@@ -2,9 +2,9 @@ import { Skeleton } from "@mui/material";
 // Functions //
 import { randomize_length } from "../../../functions/randomize.function";
 // Components //
-import Skeleton_Rolodex_card from "../rolodex/card/Skeleton_Rolodex_card.component";
+import Skeleton_Profiles_Rolodex_card from "../rolodex/card/Skeleton_Profiles_Rolodex_card.component";
 
-const Skeleton_Rolodex = () => {
+const Skeleton_Profiles_Rolodex = () => {
   return (
     <div className="flex flex-col gap-14">
       {[...Array(4)].map((_, index) => (
@@ -14,7 +14,7 @@ const Skeleton_Rolodex = () => {
           </h1>
           <div className="| grid grid-cols-1 gap-4 min-[420px]:grid-cols-2 lg:grid-cols-4 xl:mx-16 2xl:grid-cols-6">
             {[...Array(randomize_length())].map((_, index) => (
-              <Skeleton_Rolodex_card key={index} />
+              <Skeleton_Profiles_Rolodex_card key={index} />
             ))}
           </div>
         </div>
@@ -23,4 +23,4 @@ const Skeleton_Rolodex = () => {
   );
 };
 
-export default Skeleton_Rolodex;
+export default Skeleton_Profiles_Rolodex;

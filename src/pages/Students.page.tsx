@@ -9,9 +9,9 @@ import { useContext_Students } from "../contexts/Student.context";
 import { MajorContextProvider } from "../contexts/Major.context";
 // Components //
 import PageHeader from "../components/miscellaneous/common/PageHeader.component";
-import Student_rolodex from "../components/Profiles/Student/Student_rolodex.component";
-import Student_filters from "../components/Profiles/Student/filters/Student_filters.component";
-import Skeleton_Rolodex from "../components/Profiles/rolodex/Skeleton_Rolodex.component";
+import Students_rolodex from "../components/Profiles/Student/Students_rolodex.component";
+import Students_filters from "../components/Profiles/Student/filters/Students_filters.component";
+import Skeleton_Profiles_Rolodex from "../components/Profiles/rolodex/Skeleton_Profiles_Rolodex.component";
 
 const Students = () => {
   const { students, studentCount, fetchStudents } = useContext_Students();
@@ -84,7 +84,7 @@ const Students = () => {
 
       <div className="flex flex-col gap-8">
         <MajorContextProvider>
-          <Student_filters
+          <Students_filters
             selectedMajor={selectedMajor}
             selectedLevel={selectedLevel}
             onMajorChangeHandler={onMajorChange}
@@ -95,9 +95,9 @@ const Students = () => {
         </MajorContextProvider>
 
         {students.status ? (
-          <Student_rolodex filteredStudents={filteredStudents} />
+          <Students_rolodex filteredStudents={filteredStudents} />
         ) : (
-          <Skeleton_Rolodex />
+          <Skeleton_Profiles_Rolodex />
         )}
       </div>
     </>

@@ -9,9 +9,9 @@ import { MajorContextProvider } from "../contexts/Major.context";
 import { useContext_Teachers } from "../contexts/Teacher.context";
 // Components //
 import PageHeader from "../components/miscellaneous/common/PageHeader.component";
-import Teacher_filters from "../components/Profiles/Teacher/filters/Teacher_filters.component";
-import Teacher_rolodex from "../components/Profiles/Teacher/Teacher_rolodex.component";
-import Skeleton_Rolodex from "../components/Profiles/rolodex/Skeleton_Rolodex.component";
+import Teachers_filters from "../components/Profiles/Teacher/filters/Teachers_filters.component";
+import Teachers_rolodex from "../components/Profiles/Teacher/Teachers_rolodex.component";
+import Skeleton_Rolodex from "../components/Profiles/rolodex/Skeleton_Profiles_Rolodex.component";
 
 const Teachers = () => {
   const { teachers, teacherCount, fetchTeachers } = useContext_Teachers();
@@ -61,14 +61,14 @@ const Teachers = () => {
 
       <div className="flex flex-col gap-8">
         <MajorContextProvider>
-          <Teacher_filters
+          <Teachers_filters
             onMajorChangeHandler={onMajorChange}
             onSearchFieldChangeHandler={onSearchFieldChange}
           />
         </MajorContextProvider>
 
         {teachers.status ? (
-          <Teacher_rolodex filteredTeachers={filteredTeachers} />
+          <Teachers_rolodex filteredTeachers={filteredTeachers} />
         ) : (
           <Skeleton_Rolodex />
         )}

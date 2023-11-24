@@ -2,10 +2,12 @@ import { Suspense, lazy, useEffect } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { fetch_user_info } from "./functions/fetch/fetch_user.function";
-// Contexts //
-import { useContext_Account } from "./contexts/Account.context";
+// Contexts providers //
 import { StudentsContextProvider } from "./contexts/Student.context";
 import { TeachersContextProvider } from "./contexts/Teacher.context";
+import { AnnouncementsContextProvider } from "./contexts/Announcement.context";
+// Contexts //
+import { useContext_Account } from "./contexts/Account.context";
 // Components //
 import Sidebar from "./components/miscellaneous/Sidebar/Sidebar.component";
 import PageNotFound from "./components/miscellaneous/PageNotFound.component";
@@ -14,6 +16,7 @@ import Loading from "./components/miscellaneous/Loading.component";
 // Pages //
 const Login = lazy(() => import("./pages/Login.page"));
 const Home = lazy(() => import("./pages/Home.page"));
+const Announcements = lazy(() => import("./pages/Announcements.page"));
 const Students = lazy(() => import("./pages/Students.page"));
 const Teachers = lazy(() => import("./pages/Teachers.page"));
 
@@ -54,12 +57,27 @@ const App = () => {
               {/* No URL */}
               <Route path="" element={<Navigate to="/home" replace />} />
               <Route path="/login" element={<Navigate to="/home" replace />} />
-
               {/* Page not found */}
               <Route path="*" element={<PageNotFound />}></Route>
 
               {/* Home */}
-              <Route path="/home" element={<Home />}></Route>
+              <Route
+                path="/home"
+                element={
+                  <AnnouncementsContextProvider>
+                    <Home />
+                  </AnnouncementsContextProvider>
+                }
+              ></Route>
+              {/* Announcements */}
+              <Route
+                path="/announcements"
+                element={
+                  <AnnouncementsContextProvider>
+                    <Announcements />
+                  </AnnouncementsContextProvider>
+                }
+              ></Route>
               {/* Students */}
               <Route
                 path="/students"

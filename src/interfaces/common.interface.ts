@@ -9,3 +9,12 @@ export interface ClassroomInterface {
   classroom_major: number;
   classroom_homeroom_teacher: number;
 }
+
+export interface AnnouncementInterface {
+  announcement_ID: number;
+  announcement_status: number;
+  announcement_title: string;
+  announcement_description: string;
+  announcement_image: string;
+  announcement_create_datetime: string;
+}

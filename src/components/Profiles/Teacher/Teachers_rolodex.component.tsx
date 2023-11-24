@@ -16,7 +16,7 @@ interface CurrentComponentProp {
   filteredTeachers: TeacherInterface[];
 }
 
-const Teacher_rolodex = (props: CurrentComponentProp) => {
+const Teachers_rolodex = (props: CurrentComponentProp) => {
   const { filteredTeachers } = props;
 
   const [isLoading, setIsLoading] = useState(true);
@@ -80,4 +80,4 @@ const Teacher_rolodex = (props: CurrentComponentProp) => {
   }
 };
 
-export default Teacher_rolodex;
+export default Teachers_rolodex;

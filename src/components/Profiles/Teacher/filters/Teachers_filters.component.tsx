@@ -17,7 +17,7 @@ interface CurrentComponentProp {
   onSearchFieldChangeHandler: any;
 }
 
-const Teacher_filters = (props: CurrentComponentProp) => {
+const Teachers_filters = (props: CurrentComponentProp) => {
   const { onMajorChangeHandler, onSearchFieldChangeHandler } = props;
 
   const { majors, fetchMajors } = useContext_Majors();
@@ -64,4 +64,4 @@ const Teacher_filters = (props: CurrentComponentProp) => {
   );
 };
 
-export default Teacher_filters;
+export default Teachers_filters;

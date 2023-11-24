@@ -10,7 +10,7 @@ import {
 // Contexts //
 import { useContext_Majors } from "../../../../contexts/Major.context";
 // Components //
-import Student_filter_class from "./Student_filter_class.component";
+import Students_filter_class from "./Students_filter_class.component";
 // Constants //
 import {
   level_name,
@@ -120,7 +120,7 @@ const Student_filters = (props: CurrentComponentProp) => {
           ))}
         </TextField>
       </div>
-      <div className="flex justify-between flex-row gap-2 md:w-1/3">
+      <div className="flex flex-row justify-between gap-2 md:w-1/3">
         {/* Level */}
         <TextField
           label={t("label_level")}
@@ -167,7 +167,7 @@ const Student_filters = (props: CurrentComponentProp) => {
           </option>
         </TextField>
         {/* Class */}
-        <Student_filter_class
+        <Students_filter_class
           onChangeHandler={onClassChangeHandler}
           classes={filteredClass}
         />
