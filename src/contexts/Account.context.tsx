@@ -7,6 +7,7 @@ import {
   useState,
 } from "react";
 import { UserInfoInterface } from "../interfaces/account.interface";
+import { fetch_user_info } from "../functions/fetch/fetch_user.function";
 
 // Type //
 type AccountContextType = {
@@ -77,29 +78,13 @@ export function AccountContextProvider({
 
       isLoggedIn,
       setIsLoggedIn,
-    ]
+    ],
   );
 
   useEffect(() => {
-    setUserInfo({
-      primary_profile_ID: 1,
-      profile_position: 1,
-      profile_ID: 17903,
-      profile_first_name: "Nawee",
-      profile_last_name: "Taegook",
-      profile_nickname: "Nawee",
-      profile_first_name_thai: "นาวี",
-      profile_last_name_thai: "แทกุ๊ก",
-      profile_nickname_thai: "นาวี",
-      profile_gender: 1,
-      profile_major: 6,
-      profile_level: 3,
-      profile_class: 3,
-      profile_phone: "0999999999",
-      profile_email: "nawee.tae@sbacnon.ac.th",
-      profile_line_ID: "orurio345",
-      profile_image: "/assets/profilePic/students/17903_nawee.png",
-    });
+    if (userInfo.primary_profile_ID === 0) {
+      fetch_user_info(accessToken, setUserInfo);
+    }
   }, []);
 
   return (

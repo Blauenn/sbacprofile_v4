@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { Tooltip } from "@mui/material";
 import { hover_transition } from "../../../constants/styles/transition.style";
 
@@ -15,15 +15,22 @@ interface CurrentComponentProp {
 const Sidebar_link = (props: CurrentComponentProp) => {
   const { title, to, icon, margin } = props;
 
+  const location = useLocation();
+
   return (
     <li className={`${sidebar_li} ${margin}`}>
       <Tooltip
-        title={<h1 className="text-sm p-1">{title}</h1>}
+        title={<h1 className="p-1 text-sm">{title}</h1>}
         placement="right"
         arrow
-        disableInteractive>
+        disableInteractive
+      >
         <NavLink to={to}>
-          <i className={`${icon} ${sidebar_i} ${hover_transition}`}></i>
+          <i
+            className={`${icon} ${sidebar_i} ${hover_transition} ${
+              location.pathname === to ? "opacity-100" : null
+            }`}
+          ></i>
         </NavLink>
       </Tooltip>
     </li>

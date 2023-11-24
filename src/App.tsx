@@ -1,49 +1,104 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
+import { fetch_user_info } from "./functions/fetch/fetch_user.function";
+// Contexts //
+import { useContext_Account } from "./contexts/Account.context";
+import { StudentsContextProvider } from "./contexts/Student.context";
+import { TeachersContextProvider } from "./contexts/Teacher.context";
 // Components //
 import Sidebar from "./components/miscellaneous/Sidebar/Sidebar.component";
 import PageNotFound from "./components/miscellaneous/PageNotFound.component";
 import Loading from "./components/miscellaneous/Loading.component";
-// Contexts //
-import { AccountContextProvider } from "./contexts/Account.context";
 
 // Pages //
+const Login = lazy(() => import("./pages/Login.page"));
 const Home = lazy(() => import("./pages/Home.page"));
 const Students = lazy(() => import("./pages/Students.page"));
+const Teachers = lazy(() => import("./pages/Teachers.page"));
 
 const App = () => {
   const location = useLocation();
 
-  return (
-    <AccountContextProvider>
-      <div className="flex flex-row">
-        <Sidebar />
+  const {
+    accessToken,
+    isLoggedIn,
+    setAccessToken,
+    setUserInfo,
+    setIsLoggedIn,
+  } = useContext_Account();
 
-        <Suspense fallback={<Loading />}>
-          <div className="relative ms-20 me-8 my-16 | sm:ms-32 sm:me-20 sm:my-20 | lg:ms-40 lg:me-28 | w-full">
-            <AnimatePresence>
-              <Routes location={location} key={location.pathname}>
-                {/* No URL */}
-                <Route path="" element={<Navigate to="/home" replace />} />
-                <Route
-                  path="/login"
-                  element={<Navigate to="/home" replace />}
-                />
+  useEffect(() => {
+    const storedAccessToken = localStorage.getItem("accessToken");
 
-                {/* Page not found */}
-                <Route path="*" element={<PageNotFound />}></Route>
+    if (storedAccessToken) {
+      setAccessToken(storedAccessToken);
+      setIsLoggedIn(true);
 
-                {/* Home */}
-                <Route path="/home" element={<Home />}></Route>
-                {/* Home */}
-                <Route path="/students" element={<Students />}></Route>
-              </Routes>
-            </AnimatePresence>
+      if (accessToken) {
+        fetch_user_info(accessToken, setUserInfo);
+      } else {
+        setIsLoggedIn(false);
+      }
+    }
+  }, [accessToken]);
+
+  return isLoggedIn ? (
+    <div className="flex flex-row">
+      <Sidebar />
+
+      <Suspense fallback={<Loading />}>
+        <AnimatePresence>
+          <div className="| | | relative my-16 me-8 ms-20 w-full sm:my-20 sm:me-20 sm:ms-32 lg:me-28 lg:ms-40">
+            <Routes location={location} key={location.pathname}>
+              {/* No URL */}
+              <Route path="" element={<Navigate to="/home" replace />} />
+              <Route path="/login" element={<Navigate to="/home" replace />} />
+
+              {/* Page not found */}
+              <Route path="*" element={<PageNotFound />}></Route>
+
+              {/* Home */}
+              <Route path="/home" element={<Home />}></Route>
+              {/* Students */}
+              <Route
+                path="/students"
+                element={
+                  <StudentsContextProvider>
+                    <Students />
+                  </StudentsContextProvider>
+                }
+              ></Route>
+              {/* Teachers */}
+              <Route
+                path="/teachers"
+                element={
+                  <TeachersContextProvider>
+                    <Teachers />
+                  </TeachersContextProvider>
+                }
+              ></Route>
+            </Routes>
           </div>
-        </Suspense>
-      </div>
-    </AccountContextProvider>
+        </AnimatePresence>
+      </Suspense>
+    </div>
+  ) : (
+    <Suspense>
+      <Routes>
+        <Route path="*" element={<Navigate to="/login" replace />} />
+        <Route
+          path="/login"
+          element={
+            <Login
+              setAccessToken={setAccessToken}
+              setUserInfo={setUserInfo}
+              setIsLoggedIn={setIsLoggedIn}
+            />
+          }
+        />
+      </Routes>
+    </Suspense>
   );
 };
 

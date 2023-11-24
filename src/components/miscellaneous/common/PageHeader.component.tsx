@@ -1,3 +1,5 @@
+import { Skeleton } from "@mui/material";
+
 interface CurrentComponentProp {
     icon: string;
     text: string;
@@ -14,7 +16,7 @@ interface CurrentComponentProp {
           {text}
         </h1>
         {subtext != "" ? (
-          <h1 className="text-2xl opacity-75">{subtext}</h1>
+          <h1 className="text-2xl opacity-75">{subtext ?? <Skeleton />}</h1>
         ) : null}
       </div>
     );

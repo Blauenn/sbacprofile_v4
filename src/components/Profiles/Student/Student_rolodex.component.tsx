@@ -24,7 +24,7 @@ const Student_rolodex = (props: CurrentComponentProp) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 10000);
+    }, 3000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -56,10 +56,10 @@ const Student_rolodex = (props: CurrentComponentProp) => {
     });
 
     return (
-      <div>
+      <div className="flex flex-col gap-14">
         {Object.entries(sortedStudentsByMajor).map(([major, students]) => (
-          <div key={major} className="mb-12">
-            <h1 className="text-xl lg:text-2xl | font-semibold xl:mx-16 mb-6">
+          <div key={major} className="flex flex-col gap-6">
+            <h1 className="text-xl lg:text-2xl | font-semibold xl:mx-16">
               {i18n.language === "th"
                 ? major_name_thai[parseInt(major)]
                 : i18n.language === "de"

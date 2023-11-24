@@ -17,3 +17,20 @@ export interface StudentInterface {
   student_email: string;
   student_image: string;
 }
+export interface TeacherInterface {
+  primary_teacher_ID: number;
+  teacher_ID: number;
+  teacher_first_name: string;
+  teacher_last_name: string;
+  teacher_nickname: string;
+  teacher_first_name_thai: string;
+  teacher_last_name_thai: string;
+  teacher_nickname_thai: string;
+  teacher_position: number;
+  teacher_gender: number;
+  teacher_major: number;
+  teacher_phone: string;
+  teacher_line_ID: string;
+  teacher_email: string;
+  teacher_image: string;
+}

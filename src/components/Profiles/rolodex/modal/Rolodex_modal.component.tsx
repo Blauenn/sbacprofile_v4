@@ -1,12 +1,12 @@
 import Custom_Modal from "../../../Custom/Custom_modal";
 import i18n from "../../../../i18n";
+// Contexts //
+import { ClassroomContextProvider } from "../../../../contexts/Classroom.context";
+import Rolodex_modal_contacts from "./Rolodex_modal_contacts.component";
 // Components //
 import Rolodex_modal_image from "./Rolodex_modal_image.component";
 import Rolodex_modal_names from "./Rolodex_modal_names.component";
 import Rolodex_modal_majorAndClassroom from "./Rolodex_modal_majorAndClassroom.component";
-// Contexts //
-import { ClassroomContextProvider } from "../../../../contexts/Classroom.context";
-import Rolodex_modal_contacts from "./Rolodex_modal_contacts.component";
 
 interface CurrentComponentProp {
   profile: string;

@@ -2,7 +2,6 @@
     "label_major": "Major",
     "label_level": "Level",
     "label_class": "Class",
-    "label_search": "Search",
     "placeholder_search": "Search by ID or name",
     "option_all_title": "All"
 }

@@ -1,3 +1,4 @@
+// Constants //
 import { background_color_from_major } from "../../../../constants/styles/colors/color_from_major.constant";
 import { default_image } from "../../../../constants/styles/miscellaneous/default_image.constant";
 import { CDN_ENDPOINT } from "../../../../constants/ENDPOINTS";

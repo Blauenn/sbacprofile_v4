@@ -1,6 +1,6 @@
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { Fade, Modal } from "@mui/material";
-import { useEffect, useState } from "react";
 
 interface CurrentComponentProp {
   open: boolean;

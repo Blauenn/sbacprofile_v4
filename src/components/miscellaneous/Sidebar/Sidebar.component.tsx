@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Tooltip } from "@mui/material";
+// Functions //
+import { fetch_user_image } from "../../../functions/fetch/fetch_user.function";
 // Contexts //
 import { useContext_Account } from "../../../contexts/Account.context";
 // Components //
@@ -23,12 +25,18 @@ const sidebar_li = "flex justify-center sidebar-links";
 const sidebar_i = "text-2xl text-white opacity-50 hover:opacity-100";
 
 const Sidebar = () => {
-  const { userInfo } = useContext_Account();
+  const { accessToken, userInfo } = useContext_Account();
 
   const [profileImage, setProfileImage] = useState("");
 
   useEffect(() => {
-    setProfileImage("/assets/profilePic/students/17903_nawee.png");
+    const storedProfileImage = localStorage.getItem("profileImage");
+
+    if (!storedProfileImage) {
+      fetch_user_image(accessToken, setProfileImage);
+    } else {
+      setProfileImage(storedProfileImage);
+    }
   }, []);
 
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);
@@ -50,20 +58,29 @@ const Sidebar = () => {
               icon="fa-solid fa-home"
               margin="mb-4"
             />
+            {/* Announcements */}
+            <Sidebar_link
+              title={t("announcements")}
+              to="/announcements"
+              icon="fa-solid fa-bullhorn"
+              margin=""
+            />
 
             {userInfo ? (
               /* User dashboard */
-              <li className={`${sidebar_li} mt-auto mx-1`}>
+              <li className={`${sidebar_li} mx-1 mt-auto`}>
                 <Tooltip
-                  title={<h1 className="text-sm p-1">{t("dashboard")}</h1>}
+                  title={<h1 className="p-1 text-sm">{t("dashboard")}</h1>}
                   placement="right"
                   arrow
-                  disableInteractive>
+                  disableInteractive
+                >
                   <NavLink to="/dashboard">
                     <div
                       className={`${
                         background_color_from_major[userInfo.profile_major]
-                      } rounded-full overflow-hidden`}>
+                      } overflow-hidden rounded-full`}
+                    >
                       <img
                         src={`${CDN_ENDPOINT}${profileImage}`}
                         onError={(e) => {
@@ -76,7 +93,7 @@ const Sidebar = () => {
               </li>
             ) : (
               <li className={`${sidebar_li} mt-auto`}>
-                <div className="w-[30px] h-[30px] rounded-full bg-white opacity-50"></div>
+                <div className="h-[30px] w-[30px] rounded-full bg-white opacity-50"></div>
               </li>
             )}
 
@@ -105,15 +122,17 @@ const Sidebar = () => {
             {/* Logout button */}
             <li className={`${sidebar_li}`}>
               <Tooltip
-                title={<h1 className="text-sm p-1">{t("logout")}</h1>}
+                title={<h1 className="p-1 text-sm">{t("logout")}</h1>}
                 placement="right"
                 arrow
-                disableInteractive>
+                disableInteractive
+              >
                 <i
                   onClick={() => {
                     setLogoutModalOpen(true);
                   }}
-                  className={`fa-solid fa-right-from-bracket rotate-180 cursor-pointer ${sidebar_i} ${hover_transition}`}></i>
+                  className={`fa-solid fa-right-from-bracket rotate-180 cursor-pointer ${sidebar_i} ${hover_transition}`}
+                ></i>
               </Tooltip>
               <Sidebar_modal_logout
                 open={logoutModalOpen}

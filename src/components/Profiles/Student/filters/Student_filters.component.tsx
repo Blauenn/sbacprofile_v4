@@ -7,10 +7,10 @@ import {
   ClassroomInterface,
   MajorInterface,
 } from "../../../../interfaces/common.interface";
-// Components //
-import Student_filter_class from "./Student_filter_class.component";
 // Contexts //
 import { useContext_Majors } from "../../../../contexts/Major.context";
+// Components //
+import Student_filter_class from "./Student_filter_class.component";
 // Constants //
 import {
   level_name,
@@ -175,7 +175,7 @@ const Student_filters = (props: CurrentComponentProp) => {
       {/* Search */}
       <div className="md:w-1/3">
         <TextField
-          label={t("label_search")}
+          label={t("placeholder_search")}
           className="w-full"
           onChange={onSearchFieldChangeHandler}
           InputProps={{ sx: { borderRadius: 3, background: "#FFFFFF" } }}

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Tooltip } from "@mui/material";
+// Functions //
 import { handle_copy } from "../../../../functions/copy.function";
 // Constants //
 import { hover_text_color_from_major } from "../../../../constants/styles/colors/color_from_major.constant";
