@@ -4,8 +4,8 @@ const Loading = () => {
   const { t } = useTranslation("common");
 
   return (
-    <div className="flex flex-col justify-center items-center gap-8 w-full mt-16">
-      <i className="fa-solid fa-spinner animate-spin text-6xl text-primary"></i>
+    <div className="flex flex-col items-center justify-center w-full gap-8 mt-16">
+      <i className="text-6xl fa-solid fa-spinner animate-spin text-primary"></i>
       <h1 className="text-xl opacity-50">{t("loading_message")}</h1>
     </div>
   );

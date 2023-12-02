@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import axios from "axios";
 import { StudentInterface } from "../interfaces/user.interface";
+import { title_case_capitalize } from "../functions/string.function";
 // Constants //
 import { API_ENDPOINT } from "../constants/ENDPOINTS";
 
@@ -21,7 +22,7 @@ type StudentsContextType = {
   setStudents: React.Dispatch<React.SetStateAction<StudentContextInterface>>;
   studentCount: number;
   setStudentCount: React.Dispatch<React.SetStateAction<number>>;
-  fetchStudents: () => void;
+  fetchStudents: (force?: boolean) => void;
 };
 type StudentsContextProviderProps = {
   children: ReactNode;
@@ -50,14 +51,25 @@ export function StudentsContextProvider({
   const [studentCount, setStudentCount] = useState<number>(0);
 
   const fetchStudents = async (force?: boolean) => {
-    if (force || students.result.length === 0) {
+    if (force || (!students.status && students.result.length === 0)) {
       try {
         const response: { data: StudentContextInterface } = await axios.get(
           `${API_ENDPOINT}/api/v1/student/getAll`
         );
 
-        setStudents(response.data);
-        setStudentCount(response.data.result.length);
+				// Capitalize names //
+				const modifiedStudents = response.data.result.map(student => ({
+					...student,
+					student_first_name: title_case_capitalize(student.student_first_name),
+					student_last_name: title_case_capitalize(student.student_last_name),
+				}));
+
+				setStudents({
+					status: response.data.status,
+					result: modifiedStudents,
+				});
+	
+				setStudentCount(modifiedStudents.length);
       } catch (error) {
         setStudents({
           status: false,

@@ -54,7 +54,7 @@ const Custom_Modal = (props: CurrentComponentProp) => {
         <Modal
           open={open}
           onClose={onModalClose}
-          className="flex justify-center items-center"
+          className="flex items-center justify-center"
           sx={{ backdropFilter: "blur(2px)", padding }}
           closeAfterTransition>
           <Fade in={open}>
@@ -88,8 +88,8 @@ const Custom_Modal = (props: CurrentComponentProp) => {
                   onClick={onModalClose}
                   className="flex justify-center items-center bg-red-600 hover:bg-red-700 rounded-full w-[20px] h-[20px]"></button>
               </div>
-              <div className="flex flex-col sm:flex-row w-full">
-                <div className="flex flex-col py-8 px-4 w-full lg:gap-x-4 gap-4">
+              <div className="flex flex-col w-full sm:flex-row">
+                <div className="flex flex-col w-full gap-4 px-4 py-8 lg:gap-x-4">
                   {children}
                 </div>
               </div>

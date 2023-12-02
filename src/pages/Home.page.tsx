@@ -6,9 +6,7 @@ import fade_transition from "../animations/fade_transition.transition";
 // Contexts //
 import { useContext_Announcements } from "../contexts/Announcement.context";
 // Components //
-import Announcements_rolodex_card from "../components/Announcements/card/Announcements_rolodex_card.component";
-import { NavLink } from "react-router-dom";
-import { hover_transition } from "../constants/styles/transition.style";
+import Home_announcements from "../components/Home/Home_announcements.component";
 
 const Home = () => {
   const { announcements, fetchAnnouncements } = useContext_Announcements();
@@ -34,7 +32,7 @@ const Home = () => {
     };
 
     fetchLatestAnnouncement();
-  }, [announcements.result]);
+  }, [announcements]);
 
   const { t } = useTranslation("page_home");
 
@@ -45,16 +43,7 @@ const Home = () => {
         <h1 className="text-xl">{t("welcome_message")}</h1>
       </div>
       {announcements.status && latestAnnouncement ? (
-        <div className="grid grid-cols-4">
-          <div
-            className={`col-span-4 lg:col-span-2 bg-white shadow-sm rounded-xl w-full overflow-hidden group ${hover_transition} hover:bg-slate-200 cursor-pointer`}>
-            <NavLink to="/announcements">
-              <Announcements_rolodex_card
-                announcement={latestAnnouncement}
-              />
-            </NavLink>
-          </div>
-        </div>
+        <Home_announcements latestAnnouncement={latestAnnouncement} />
       ) : null}
     </div>
   );

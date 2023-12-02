@@ -4,72 +4,77 @@ import { AnnouncementInterface } from "../interfaces/common.interface";
 import axios from "axios";
 
 interface AnnouncementContextInterface {
-  status: boolean;
-  result: AnnouncementInterface[];
+	status: boolean;
+	result: AnnouncementInterface[];
 }
 
 // Type //
 type AnnouncementsContextType = {
-  announcements: AnnouncementContextInterface;
-  setAnnouncements: React.Dispatch<
-    React.SetStateAction<AnnouncementContextInterface>
-  >;
-  fetchAnnouncements: () => void;
+	announcements: AnnouncementContextInterface;
+	setAnnouncements: React.Dispatch<
+		React.SetStateAction<AnnouncementContextInterface>
+	>;
+	fetchAnnouncements: (force?: boolean) => void;
 };
 type AnnouncementsContextProviderProps = {
-  children: ReactNode;
+	children: ReactNode;
 };
 
 // Context //
 const AnnouncementsContext = createContext<
-  AnnouncementsContextType | undefined
+	AnnouncementsContextType | undefined
 >(undefined);
 
 export function useContext_Announcements() {
-  const context = useContext(AnnouncementsContext);
-  if (context === undefined) {
-    throw new Error("useContext_Announcements is not used within its provider");
-  }
-  return context;
+	const context = useContext(AnnouncementsContext);
+	if (context === undefined) {
+		throw new Error("useContext_Announcements is not used within its provider");
+	}
+	return context;
 }
 
 export function AnnouncementsContextProvider({
-  children,
+	children,
 }: Readonly<AnnouncementsContextProviderProps>) {
-  const [announcements, setAnnouncements] =
-    useState<AnnouncementContextInterface>({
-      status: false,
-      result: [],
-    });
+	const [announcements, setAnnouncements] =
+		useState<AnnouncementContextInterface>({
+			status: false,
+			result: [],
+		});
 
-  const fetchAnnouncements = async (force?: boolean) => {
-    if (force || announcements.result.length === 0) {
-      try {
-        const response: { data: AnnouncementContextInterface } =
-          await axios.get(`${API_ENDPOINT}/api/v1/announcement/getAll`);
+	const fetchAnnouncements = async (force?: boolean) => {
+		if (force || (!announcements.status && announcements.result.length === 0)) {
+			try {
+				const response: { data: AnnouncementContextInterface; } =
+					await axios.get(`${API_ENDPOINT}/api/v1/announcement/getAll`);
 
-        setAnnouncements(response.data);
-      } catch (error) {
-        setAnnouncements({
-          status: false,
-          result: [],
-        });
-      }
-    }
-  };
+				const reversedAnnouncements: AnnouncementContextInterface = {
+					status: true,
+					result: response.data.result.reverse()
+				};
 
-  const contextValue = useMemo(
-    () => ({
-      announcements,
-      setAnnouncements,
-      fetchAnnouncements,
-    }),
-    [announcements, setAnnouncements],
-  );
+				setAnnouncements(reversedAnnouncements);
+			} catch (error) {
+				setAnnouncements({
+					status: false,
+					result: [],
+				});
+			}
+		}
+	};
 
-  return (
-    <AnnouncementsContext.Provider value={contextValue}>
-      {children}
-    </AnnouncementsContext.Provider>
-  );
+	const contextValue = useMemo(
+		() => ({
+			announcements,
+			setAnnouncements,
+			fetchAnnouncements,
+		}),
+		[announcements, setAnnouncements],
+	);
+
+	return (
+		<AnnouncementsContext.Provider value={contextValue}>
+			{children}
+		</AnnouncementsContext.Provider>
+	);
 }

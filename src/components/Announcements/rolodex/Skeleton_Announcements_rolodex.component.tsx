@@ -1,3 +1,4 @@
+import fade_transition from "../../../animations/fade_transition.transition";
 import Skeleton_Announcements_rolodex_card from "../card/Skeleton_Announcements_rolodex_card.component";
 
 const Skeleton_Announcements_rolodex = () => {
@@ -10,4 +11,4 @@ const Skeleton_Announcements_rolodex = () => {
   )
 }
 
-export default Skeleton_Announcements_rolodex;
+export default fade_transition(Skeleton_Announcements_rolodex);

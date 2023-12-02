@@ -4,72 +4,83 @@ import axios from "axios";
 import { API_ENDPOINT } from "../constants/ENDPOINTS";
 
 interface ClassroomContextInterface {
-  status: boolean;
-  result: ClassroomInterface[];
+	status: boolean;
+	result: ClassroomInterface[];
 }
 
 // Type //
 type ClassroomContextType = {
-  classrooms: ClassroomContextInterface;
-  setClassrooms: React.Dispatch<
-    React.SetStateAction<ClassroomContextInterface>
-  >;
-  fetchClassrooms: () => void;
+	classrooms: ClassroomContextInterface;
+	setClassrooms: React.Dispatch<
+		React.SetStateAction<ClassroomContextInterface>
+	>;
+	fetchClassrooms: (force?: boolean) => void;
 };
 type ClassroomContextProviderProps = {
-  children: ReactNode;
+	children: ReactNode;
 };
 
 // Context //
 const ClassroomsContext = createContext<ClassroomContextType | undefined>(
-  undefined
+	undefined
 );
 
 export function useContext_Classrooms() {
-  const context = useContext(ClassroomsContext);
-  if (context === undefined) {
-    throw new Error("useContext_Classrooms is not used within its provider");
-  }
-  return context;
+	const context = useContext(ClassroomsContext);
+	if (context === undefined) {
+		throw new Error("useContext_Classrooms is not used within its provider");
+	}
+	return context;
 }
 
 export function ClassroomContextProvider({
-  children,
+	children,
 }: Readonly<ClassroomContextProviderProps>) {
-  const [classrooms, setClassrooms] = useState<ClassroomContextInterface>({
-    status: false,
-    result: [],
-  });
+	const [classrooms, setClassrooms] = useState<ClassroomContextInterface>({
+		status: false,
+		result: [],
+	});
 
-  const fetchClassrooms = async (force?: boolean) => {
-    if (force || classrooms.result.length === 0) {
-      try {
-        const response: { data: ClassroomContextInterface } = await axios.get(
-          `${API_ENDPOINT}/api/v1/classroom`
-        );
+	const fetchClassrooms = async (force?: boolean) => {
+		if (force || (!classrooms.status && classrooms.result.length === 0)) {
+			try {
+				const response: { data: ClassroomContextInterface; } = await axios.get(
+					`${API_ENDPOINT}/api/v1/classroom`
+				);
 
-        setClassrooms(response.data);
-      } catch (error) {
-        setClassrooms({
-          status: false,
-          result: [],
-        });
-      }
-    }
-  };
+				const sortedClassrooms = response.data.result.sort((a: ClassroomInterface, b: ClassroomInterface) => {
+					if (a.classroom_level !== b.classroom_level) {
+						return a.classroom_level - b.classroom_level;
+					}
 
-  const contextValue = useMemo(
-    () => ({
-      classrooms,
-      setClassrooms,
-      fetchClassrooms,
-    }),
-    [classrooms, setClassrooms]
-  );
+					return a.classroom_class - b.classroom_class;
+				});
 
-  return (
-    <ClassroomsContext.Provider value={contextValue}>
-      {children}
-    </ClassroomsContext.Provider>
-  );
+				setClassrooms({
+					status: true,
+					result: sortedClassrooms
+				});
+			} catch (error) {
+				setClassrooms({
+					status: false,
+					result: [],
+				});
+			}
+		}
+	};
+
+	const contextValue = useMemo(
+		() => ({
+			classrooms,
+			setClassrooms,
+			fetchClassrooms,
+		}),
+		[classrooms, setClassrooms]
+	);
+
+	return (
+		<ClassroomsContext.Provider value={contextValue}>
+			{children}
+		</ClassroomsContext.Provider>
+	);
 }

@@ -1,4 +1,5 @@
 {
-    "loading_message": "Loading",
+    "loading_message": "Loading...",
+    "button_submitting_message": "Submitting...",
     "noResults_message": "No results"
 }

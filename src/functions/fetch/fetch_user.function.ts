@@ -22,21 +22,23 @@ export const fetch_user_info = async (
   accessToken: string,
   setUserInfo: any,
 ) => {
-  try {
-    const response: UserInfoResponse = await axios.get(
-      `${API_ENDPOINT}/api/v1/profile/getProfile`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          authorization: accessToken,
-        },
-      },
-    );
-
-    if (response.data.status) {
-      setUserInfo(response.data.result);
-    }
-  } catch (error) {}
+  if (accessToken !== "") {
+		try {
+			const response: UserInfoResponse = await axios.get(
+				`${API_ENDPOINT}/api/v1/profile/getProfile`,
+				{
+					headers: {
+						"Content-Type": "application/json",
+						authorization: accessToken,
+					},
+				},
+			);
+	
+			if (response.data.status) {
+				setUserInfo(response.data.result);
+			}
+		} catch (error) {}
+	}
 };
 
 export const fetch_user_image = async (

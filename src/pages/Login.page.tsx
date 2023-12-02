@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { TextField } from "@mui/material";
+import fade_transition from "../animations/fade_transition.transition";
 // Functions //
 import { handle_input_change } from "../functions/fields.function";
 import { handleLogin } from "../functions/account/login.function";
@@ -29,7 +30,7 @@ const Login = (props: CurrentComponentProp) => {
   return (
     <div>
       <div className="flex justify-center">
-        <div className="border-standardBlack mt-8 rounded-xl border border-opacity-25 bg-white p-8">
+        <div className="p-8 mt-8 bg-white border border-opacity-25 border-standardBlack rounded-xl">
           <h1 className="mb-8 text-3xl font-semibold">{t("title")}</h1>
           <form
             id="login_form"
@@ -46,7 +47,7 @@ const Login = (props: CurrentComponentProp) => {
             }}
             className="flex w-[256px] flex-col items-center sm:w-[512px]"
           >
-            <div className="flex w-full flex-col items-center gap-4">
+            <div className="flex flex-col items-center w-full gap-4">
               <TextField
                 label={t("label_email")}
                 value={loginObject.login_email}
@@ -69,14 +70,14 @@ const Login = (props: CurrentComponentProp) => {
                 InputProps={{ sx: { borderRadius: 3 } }}
               />
               {isLoginFailed ? (
-                <div className="mb-4 flex w-full justify-start">
+                <div className="flex justify-start w-full mb-4">
                   <h1 className="text-lg font-semibold">
-                    <i className="fa-solid fa-circle-exclamation me-2 text-red-500"></i>
+                    <i className="text-red-500 fa-solid fa-circle-exclamation me-2"></i>
                     {t("invalid_credentials_message")}
                   </h1>
                 </div>
               ) : null}
-              <div className="flex w-full justify-start">
+              <div className="flex justify-start w-full">
                 <button
                   className={`${
                     isLoggingIn ||
@@ -103,4 +104,4 @@ const Login = (props: CurrentComponentProp) => {
   );
 };
 
-export default Login;
+export default fade_transition(Login);

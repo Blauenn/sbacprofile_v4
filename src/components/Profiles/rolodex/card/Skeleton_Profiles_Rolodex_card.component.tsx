@@ -8,7 +8,6 @@ const rolodex_card_style = `relative flex items-center flex-col bg-white shadow-
 
 const Skeleton_Profiles_Rolodex_card = () => (
   <div className={`${rolodex_card_style}`}>
-    {/* If the user is artificial. */}
     <div className="flex flex-col items-center justify-center w-full py-2">
       <Skeleton_Profiles_Rolodex_card_image />
       <div className="w-5/6">
